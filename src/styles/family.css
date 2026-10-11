@@ -1,0 +1,35 @@
+/* Family memories — large, warm, cinematic */
+.family-list { display: grid; gap: clamp(2rem, 8vh, 6rem); padding-bottom: clamp(3rem, 10vh, 8rem); }
+.family-block {
+  display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.85fr); align-items: center;
+  gap: clamp(2rem, 6vw, 8rem); padding: clamp(1.5rem, 5vh, 4rem) var(--pad-x); max-width: 130rem; margin-inline: auto; width: 100%;
+}
+.family-block[data-side="right"] .family-visual { order: 2; }
+.family-hero { aspect-ratio: 16 / 10; max-height: 70vh; max-height: 70svh; }
+.family-hero[data-orient="portrait"] { aspect-ratio: 3 / 4; max-width: 30rem; margin-inline: auto; }
+.family-empty {
+  display: grid; place-content: center; justify-items: center; gap: 0.8rem; aspect-ratio: 16 / 10; max-height: 60svh; border-radius: 1.4rem;
+  color: rgba(255, 255, 255, 0.85); font-size: 0.78rem; letter-spacing: 0.26em; text-transform: uppercase;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05));
+  border: 1px dashed rgba(255, 255, 255, 0.5); box-shadow: 0 2rem 4rem rgba(4, 18, 46, 0.3);
+}
+.family-strip { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 1rem; }
+.family-strip .photo-frame { aspect-ratio: 4 / 3; border-radius: 1.1rem; }
+.family-copy { display: grid; gap: 1.1rem; align-content: center; }
+.family-copy .chapter-title h3 { font-size: clamp(2.2rem, 4.2rem, 6.4rem); }
+.family-note { font-family: var(--display); font-style: italic; font-size: 1.55rem; line-height: 1.45; max-width: 26rem; color: rgba(255, 255, 255, 0.94); text-wrap: balance; text-shadow: 0 1px 1.2rem rgba(5, 20, 50, 0.5); }
+
+@media (max-width: 820px) {
+  .family-block { grid-template-columns: 1fr; gap: 1.4rem; }
+  .family-block[data-side="right"] .family-visual { order: 0; }
+  .family-note { font-size: 1.3rem; }
+}
+@media (max-height: 560px) and (orientation: landscape) {
+  .family-block { grid-template-columns: 1fr 1fr; padding-block: 1rem; }
+}
+
+
+/* tall (portrait) photos in the small row: show the whole photo */
+.family-strip { align-items: start; }
+.family-strip .photo-frame[data-orient="portrait"] { aspect-ratio: auto; max-height: 75svh; }
+.family-strip .photo-frame[data-orient="portrait"] img { height: auto; max-height: 75svh; object-fit: contain; }

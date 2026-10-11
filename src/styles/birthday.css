@@ -1,0 +1,31 @@
+/* BIRTHDAY_WORLD — welcome title above the cake, CTA below */
+.birthday {
+  justify-content: space-between; padding: calc(var(--safe-top) + clamp(4.2rem, 10vh, 7rem)) 1.25rem calc(var(--safe-bottom) + clamp(1rem, 3.5vh, 2.6rem));
+  animation: bday-in 1.3s cubic-bezier(0.2, 0.8, 0.2, 1) 1.15s both;
+}
+@keyframes bday-in { from { opacity: 0; transform: translateY(1.4rem); filter: blur(10px); } to { opacity: 1; transform: none; filter: none; } }
+
+.bday-top { display: grid; justify-items: center; gap: 0.2rem; text-shadow: 0 0 1.5rem rgba(255, 255, 255, 0.8); }
+.bday-kicker { font-size: 0.78rem; letter-spacing: 0.5em; padding-left: 0.5em; font-weight: 600; color: #1b4d7e; }
+.birthday .jambu-word { font-size: clamp(3.6rem, min(11vw, 17vh), 11rem); text-shadow: none; }
+.bday-sub { font-family: var(--display); font-weight: 600; font-size: 1.5rem; letter-spacing: 0.55em; padding-left: 0.55em; color: #17406e; margin-top: 0.1rem; }
+
+.bday-bottom { display: grid; justify-items: center; gap: clamp(0.6rem, 2vh, 1.2rem); }
+.bday-line { display: inline-flex; align-items: center; gap: 0.9rem; font-size: 0.74rem; letter-spacing: 0.3em; text-transform: uppercase; font-weight: 600; color: #1b4d7e; text-shadow: 0 0 1rem rgba(255, 255, 255, 0.9); }
+.bday-line i { width: 4px; height: 4px; border-radius: 50%; background: #d7a23f; }
+
+@media (max-width: 480px) {
+  .bday-kicker { font-size: 0.66rem; letter-spacing: 0.4em; }
+  .bday-sub { font-size: 1.15rem; letter-spacing: 0.4em; }
+  .bday-line { font-size: 0.6rem; letter-spacing: 0.2em; gap: 0.5rem; flex-wrap: wrap; justify-content: center; }
+}
+@media (max-height: 560px) {
+  .birthday { padding-top: calc(var(--safe-top) + 3.2rem); flex-direction: row; justify-content: space-between; align-items: flex-end; }
+  .bday-top { align-self: flex-start; justify-items: start; }
+  .bday-line { display: none; }
+  .birthday .jambu-word { font-size: clamp(2.8rem, 16vh, 6rem); }
+}
+
+@media (max-height: 820px) {
+  .bday-line { display: none; }
+}

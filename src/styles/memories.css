@@ -1,0 +1,49 @@
+/* Month-by-month cinematic chapters */
+.chapter-rail { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem; max-width: 40rem; margin-top: 0.6rem; }
+.chapter-rail button {
+  width: 2.3rem; height: 2.3rem; border-radius: 50%; font-size: 0.7rem; letter-spacing: 0.06em; font-weight: 600;
+  color: #fff; background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.4);
+  transition: background 0.2s, transform 0.2s, color 0.2s;
+}
+.chapter-rail button:hover { background: var(--gold); color: var(--navy); transform: translateY(-2px); }
+
+.memory {
+  position: relative; display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.8fr); align-items: center;
+  gap: clamp(2rem, 6vw, 9rem); min-height: min(100vh, 62rem); min-height: min(100svh, 62rem);
+  padding: clamp(2rem, 8vh, 6rem) var(--pad-x); max-width: 130rem; margin-inline: auto;
+}
+.memory[data-side="right"] .memory-visual { order: 2; }
+.memory-numeral {
+  position: absolute; top: 50%; font-family: var(--display); font-weight: 700; line-height: 0.8; pointer-events: none;
+  font-size: clamp(9rem, 28vw, 34rem); color: transparent; -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.22);
+  transform: translateY(-50%); z-index: 0;
+}
+.memory[data-side="left"] .memory-numeral { right: 2%; }
+.memory[data-side="right"] .memory-numeral { left: 2%; }
+
+.memory-visual, .memory-copy { position: relative; z-index: 1; }
+.memory-photo { aspect-ratio: 4 / 3; max-height: 72vh; max-height: 72svh; }
+.memory-photo[data-orient="portrait"] { aspect-ratio: 3 / 4; max-width: 30rem; margin-inline: auto; }
+.memory-extra { position: absolute; width: 34%; aspect-ratio: 1; border-width: 3px; }
+.memory-extra-0 { right: -4%; bottom: -8%; transform: rotate(4deg); }
+.memory-extra-1 { left: -4%; bottom: -10%; transform: rotate(-5deg); }
+
+.memory-copy { display: grid; gap: 1.1rem; align-content: center; }
+.memory-copy .chapter-title h3 { font-size: clamp(2.2rem, 4.2rem, 6.4rem); }
+.memory-meta { display: flex; gap: 0.9rem; flex-wrap: wrap; font-size: 0.75rem; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(255, 255, 255, 0.82); font-weight: 600; }
+.memory-meta span + span::before { content: "·"; margin-right: 0.9rem; color: var(--gold); }
+.memory-desc { font-size: 1.2rem; line-height: 1.65; max-width: 28rem; color: rgba(255, 255, 255, 0.92); text-wrap: pretty; text-shadow: 0 1px 1.2rem rgba(5, 20, 50, 0.5); }
+.memory-desc::before { content: ""; display: block; width: 3.4rem; height: 2px; margin-bottom: 1.1rem; background: linear-gradient(90deg, var(--gold), transparent); }
+
+@media (max-width: 820px) {
+  .memory { grid-template-columns: 1fr; min-height: 0; gap: 1.6rem; padding-block: 2.5rem; }
+  .memory[data-side="right"] .memory-visual { order: 0; }
+  .memory-photo { max-height: 58vh; max-height: 58svh; }
+  .memory-numeral { top: 1rem; transform: none; font-size: 9rem; right: 0.5rem !important; left: auto !important; }
+  .memory-copy { text-align: left; }
+}
+@media (max-height: 560px) and (orientation: landscape) {
+  .memory { min-height: 0; grid-template-columns: 1fr 1fr; padding-block: 1.5rem; gap: 1.5rem; }
+  .memory-photo { max-height: 80vh; }
+  .section-head { padding-top: 5rem; }
+}

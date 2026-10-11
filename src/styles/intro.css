@@ -1,0 +1,62 @@
+/* INTRO scene — luminous water-and-balloon opening */
+.intro {
+  justify-content: center; padding: calc(var(--safe-top) + 4.5rem) 1.25rem calc(var(--safe-bottom) + 3rem);
+  transition: opacity 0.9s ease, transform 1.4s cubic-bezier(0.4, 0, 0.2, 1), filter 0.9s;
+}
+.intro.is-exiting { opacity: 0; transform: scale(1.12); filter: blur(10px); pointer-events: none; }
+.intro.is-exiting * { pointer-events: none !important; }
+
+.intro-halo {
+  position: absolute; left: 50%; top: 50%; width: min(96vw, 64rem); height: min(86%, 52rem); transform: translate(-50%, -50%);
+  background: radial-gradient(closest-side, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.2) 55%, transparent 100%);
+  filter: blur(8px); pointer-events: none;
+}
+.intro-stack {
+  position: relative; display: grid; justify-items: center; gap: clamp(0.5rem, 2vh, 1.4rem); max-width: 100%;
+  animation: rise-in 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) 0.15s both;
+}
+@keyframes rise-in { from { opacity: 0; transform: translateY(1.6rem); filter: blur(8px); } to { opacity: 1; transform: none; filter: none; } }
+
+.intro-eyebrow { display: flex; align-items: center; gap: 1rem; color: #1b5a92; font-size: 0.74rem; letter-spacing: 0.42em; font-weight: 600; }
+.intro-eyebrow i { width: clamp(1.5rem, 6vw, 4rem); height: 1px; background: linear-gradient(90deg, transparent, #1b5a92); }
+.intro-eyebrow i:last-child { transform: scaleX(-1); }
+.intro-lead { font-family: var(--display); font-style: italic; font-weight: 500; font-size: 1.6rem; color: #17406e; }
+.intro-fullname { margin-top: 0.4rem; font-size: 0.95rem; letter-spacing: 0.5em; padding-left: 0.5em; text-transform: uppercase; font-weight: 600; color: var(--navy); }
+.intro-nick { display: grid; justify-items: center; gap: 0; margin-top: -0.3rem; }
+.intro-our { font-family: var(--display); font-style: italic; font-size: 1.7rem; color: #17406e; margin-bottom: -0.35em; position: relative; z-index: 1; }
+.intro .jambu-word { font-size: clamp(4.4rem, min(17vw, 25vh), 15rem); }
+.intro-desc { max-width: 31rem; font-size: 1.12rem; line-height: 1.6; color: #1d3e63; text-wrap: balance; }
+.intro .enter-btn { margin-top: clamp(0.4rem, 1.4vh, 1rem); }
+.intro-meta { display: flex; align-items: center; gap: 1rem; font-size: 0.74rem; letter-spacing: 0.34em; font-weight: 600; color: #1b4d7e; }
+.intro-meta i { width: 1px; height: 0.9rem; background: rgba(27, 77, 126, 0.55); }
+
+.story-hint {
+  position: absolute; bottom: calc(var(--safe-bottom) + clamp(0.6rem, 2.5vh, 1.6rem)); display: grid; justify-items: center; gap: 0.1rem;
+  font-size: 0.62rem; letter-spacing: 0.4em; font-weight: 600; color: rgba(13, 42, 77, 0.7); animation: nudge 2.6s ease-in-out infinite;
+}
+@keyframes nudge { 0%, 100% { transform: translateY(0); opacity: 0.6; } 50% { transform: translateY(0.35rem); opacity: 1; } }
+
+/* small phones */
+@media (max-width: 480px) {
+  .intro-eyebrow { font-size: 0.64rem; letter-spacing: 0.32em; }
+  .intro-lead { font-size: 1.3rem; }
+  .intro-fullname { font-size: 0.8rem; letter-spacing: 0.38em; }
+  .intro-desc { font-size: 1rem; max-width: 22rem; }
+  .intro .enter-btn { font-size: 0.7rem; padding-left: 1.3rem; letter-spacing: 0.16em; }
+  .intro-meta { font-size: 0.64rem; letter-spacing: 0.24em; gap: 0.6rem; }
+}
+/* short screens (1366×768, 1280×720, landscape phones) */
+@media (max-height: 800px) {
+  .intro { padding-top: calc(var(--safe-top) + 3.6rem); padding-bottom: calc(var(--safe-bottom) + 2.2rem); }
+  .intro-lead { font-size: 1.35rem; }
+  .intro-desc { font-size: 1rem; }
+}
+@media (max-height: 640px) {
+  .intro-desc, .intro-lead, .story-hint { display: none; }
+  .intro .jambu-word { font-size: clamp(3.4rem, min(14vw, 22vh), 9rem); }
+}
+@media (max-height: 430px) {
+  .intro { padding-top: calc(var(--safe-top) + 3rem); }
+  .intro-eyebrow, .intro-fullname { display: none; }
+  .intro-stack { gap: 0.4rem; }
+}
