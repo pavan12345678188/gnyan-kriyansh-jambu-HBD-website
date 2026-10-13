@@ -11,6 +11,8 @@ import JambuLogo from "./components/JambuLogo";
 import SoundButton from "./components/SoundButton";
 import PhotoViewer from "./components/PhotoViewer";
 
+import AIUniverse from "./components/ai/AIUniverse";
+
 import IntroScene from "./scenes/IntroScene";
 import BirthdayScene from "./scenes/BirthdayScene";
 import MemoryScene from "./scenes/MemoryScene";
@@ -25,29 +27,21 @@ import { useAudio } from "./lib/useAudio";
 const REVEAL_MS = 2300;
 
 function App() {
-  /* =====================================================
-     STATE
-  ===================================================== */
+  // STATE
 
   const [stage, setStage] = useState(STAGES.INTRO);
   const [journey, setJourney] = useState(false);
   const [viewerKey, setViewerKey] = useState(null);
 
-  /* =====================================================
-     DATA
-  ===================================================== */
+  // DATA
 
   const slides = useMemo(() => buildSlides(), []);
 
-  /* =====================================================
-     AUDIO
-  ===================================================== */
+  // AUDIO
 
   const audio = useAudio();
 
-  /* =====================================================
-     REFS
-  ===================================================== */
+  // REFS
 
   const scroller = useRef(null);
   const timer = useRef(null);
@@ -55,9 +49,7 @@ function App() {
 
   stageRef.current = stage;
 
-  /* =====================================================
-     FINISH INTRO REVEAL
-  ===================================================== */
+  // FINISH INTRO REVEAL
 
   const finishReveal = useCallback(() => {
     if (timer.current) {
@@ -74,9 +66,7 @@ function App() {
     });
   }, []);
 
-  /* =====================================================
-     ENTER JAMBU'S WORLD
-  ===================================================== */
+  // ENTER JAMBU'S WORLD
 
   const enterWorld = useCallback(() => {
     if (stageRef.current !== STAGES.INTRO) {
@@ -92,9 +82,7 @@ function App() {
     }, REVEAL_MS);
   }, [audio, finishReveal]);
 
-  /* =====================================================
-     KEYBOARD CONTROLS
-  ===================================================== */
+  // KEYBOARD CONTROLS
 
   useEffect(() => {
     const handleKeyDown = (event) => {
@@ -121,9 +109,7 @@ function App() {
     };
   }, [enterWorld, finishReveal, viewerKey]);
 
-  /* =====================================================
-     CLEANUP
-  ===================================================== */
+  // CLEANUP
 
   useEffect(() => {
     return () => {
@@ -133,9 +119,7 @@ function App() {
     };
   }, []);
 
-  /* =====================================================
-     JOURNEY INTERSECTION OBSERVER
-  ===================================================== */
+  // JOURNEY INTERSECTION OBSERVER
 
   useEffect(() => {
     if (!journey || !scroller.current) {
@@ -162,8 +146,9 @@ function App() {
       }
     );
 
-    const sections =
-      container.querySelectorAll("[data-stage]");
+    const sections = container.querySelectorAll(
+      "[data-stage]"
+    );
 
     sections.forEach((section) => {
       observer.observe(section);
@@ -174,9 +159,7 @@ function App() {
     };
   }, [journey]);
 
-  /* =====================================================
-     JOURNEY CONTROLS
-  ===================================================== */
+  // JOURNEY CONTROLS
 
   const beginJourney = useCallback(() => {
     setJourney(true);
@@ -196,21 +179,20 @@ function App() {
 
   const jump = useCallback((id) => {
     const container = scroller.current;
+
     const target = container?.querySelector(`#${id}`);
 
-    if (!container || !target) return;
-
-    const top = target.offsetTop;
+    if (!container || !target) {
+      return;
+    }
 
     container.scrollTo({
-      top,
+      top: target.offsetTop,
       behavior: "smooth",
     });
   }, []);
 
-  /* =====================================================
-     STAGE HELPERS
-  ===================================================== */
+  // STAGE HELPERS
 
   const inIntro =
     stage === STAGES.INTRO ||
@@ -220,9 +202,7 @@ function App() {
     stage === STAGES.REVEAL ||
     stage === STAGES.WORLD;
 
-  /* =====================================================
-     RENDER
-  ===================================================== */
+  // RENDER
 
   return (
     <main
@@ -234,10 +214,7 @@ function App() {
         .filter(Boolean)
         .join(" ")}
     >
-
-      {/* =================================================
-          GLOBAL 3D WORLD
-      ================================================= */}
+      {/* GLOBAL 3D WORLD */}
 
       <div
         className="jambu-scene"
@@ -246,23 +223,16 @@ function App() {
         <World stage={stage} />
       </div>
 
-
-      {/* =================================================
-          CINEMATIC VIGNETTE
-      ================================================= */}
+      {/* CINEMATIC VIGNETTE */}
 
       <div
         className="cinematic-vignette"
         aria-hidden="true"
       />
 
-
-      {/* =================================================
-          TOP BAR
-      ================================================= */}
+      {/* TOP BAR */}
 
       <header className="jambu-topbar">
-
         <JambuLogo
           onClick={
             journey
@@ -271,13 +241,11 @@ function App() {
           }
         />
 
-
         {journey && (
           <nav
             className="journey-nav"
             aria-label="Jambu story sections"
           >
-
             <button
               type="button"
               onClick={() => jump("memories")}
@@ -301,27 +269,28 @@ function App() {
 
             <button
               type="button"
+              onClick={() => jump("ai-universe-section")}
+            >
+              AI Universe
+            </button>
+
+            <button
+              type="button"
               onClick={() => jump("final")}
             >
               Celebration
             </button>
-
           </nav>
         )}
-
 
         <SoundButton
           on={audio.on}
           available={audio.available}
           onClick={audio.toggle}
         />
-
       </header>
 
-
-      {/* =================================================
-          INTRO
-      ================================================= */}
+      {/* INTRO */}
 
       {inIntro && (
         <IntroScene
@@ -330,10 +299,7 @@ function App() {
         />
       )}
 
-
-      {/* =================================================
-          BIRTHDAY WORLD
-      ================================================= */}
+      {/* BIRTHDAY WORLD */}
 
       {inWorld && !journey && (
         <BirthdayScene
@@ -341,27 +307,20 @@ function App() {
         />
       )}
 
-
-      {/* =================================================
-          STORY JOURNEY
-      ================================================= */}
+      {/* STORY JOURNEY */}
 
       {journey && (
         <div
           className="journey"
           ref={scroller}
         >
+          {/* MEMORY CHAPTER */}
 
-          {/* =============================================
-              MEMORY CHAPTER
-          ============================================= */}
+          <MemoryScene
+            onOpen={setViewerKey}
+          />
 
-          <MemoryScene onOpen={setViewerKey} />
-
-
-          {/* =============================================
-              SAME BIRTHDAY CHAPTER
-          ============================================= */}
+          {/* SAME BIRTHDAY CHAPTER */}
 
           <section
             id="connection"
@@ -379,35 +338,37 @@ function App() {
                 "/photos/us/us_7.jpeg",
                 "/photos/us/us_8.jpeg",
               ]}
-
             />
           </section>
 
+          {/* FAMILY CHAPTER */}
 
-          {/* =============================================
-              FAMILY CHAPTER
-          ============================================= */}
+          <FamilyScene
+            onOpen={setViewerKey}
+          />
 
-          <FamilyScene onOpen={setViewerKey} />
+          {/* AI UNIVERSE */}
 
+          <section
+            id="ai-universe-section"
+            className="journey-section ai-universe-section"
+          >
+            <AIUniverse
+              onExploreMemories={() => jump("memories")}
+            />
+          </section>
 
-          {/* =============================================
-              FINAL CELEBRATION
-          ============================================= */}
+          {/* FINAL CELEBRATION */}
 
           <FinalScene
             slides={slides}
             onOpen={setViewerKey}
             onRestart={restart}
           />
-
         </div>
       )}
 
-
-      {/* =================================================
-          PHOTO VIEWER
-      ================================================= */}
+      {/* PHOTO VIEWER */}
 
       {viewerKey && (
         <PhotoViewer
@@ -416,14 +377,8 @@ function App() {
           onClose={() => setViewerKey(null)}
         />
       )}
-
     </main>
   );
 }
-
-
-/* =========================================================
-   DEFAULT EXPORT
-========================================================= */
 
 export default App;

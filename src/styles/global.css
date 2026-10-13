@@ -157,6 +157,7 @@ h1, h2, h3, p { margin: 0; }
   position: absolute; inset: 0; border-radius: inherit; padding: 1.5px; pointer-events: none;
   background: conic-gradient(from var(--a), rgba(255, 255, 255, 0.25), #fff 12%, rgba(255, 210, 120, 0.95) 24%, rgba(255, 255, 255, 0.25) 42%, rgba(120, 190, 255, 0.9) 72%, rgba(255, 255, 255, 0.25));
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor; mask-composite: exclude;
   animation: spin-a 6s linear infinite;
 }
@@ -345,11 +346,45 @@ h1, h2, h3, p { margin: 0; }
   .jambu-word span { background-position: -40% 0, 0 0; }
 }
 
-/* ---------- small screens: journey nav collapses, bar compacts ---------- */
+/* ---------- small screens: keep journey navigation accessible ---------- */
 @media (max-width: 820px) {
-  .journey-nav { display: none; }
+  .journey-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    position: absolute;
+    top: calc(var(--safe-top) + 4rem);
+    left: 10px;
+    right: 10px;
+    margin: 0;
+    z-index: 31;
+  }
+
+  .journey-nav button {
+    padding: 8px 10px;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    color: #ffffff;
+    background: rgba(8, 20, 45, 0.82);
+    border: 1px solid rgba(255, 255, 255, 0.24);
+    border-radius: 20px;
+    white-space: nowrap;
+  }
+
+  .journey-nav button:hover,
+  .journey-nav button:focus-visible {
+    background: rgba(232, 192, 106, 0.22);
+    color: #ffffff;
+  }
+
   .logo-text small { display: none; }
-  .chapter-title h2, .chapter-title h3 { font-size: clamp(1.9rem, 9vw, 2.6rem); }
+
+  .chapter-title h2,
+  .chapter-title h3 {
+    font-size: clamp(1.9rem, 9vw, 2.6rem);
+  }
 }
 
 /* =========================================================
